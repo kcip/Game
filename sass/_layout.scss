@@ -1,0 +1,78 @@
+@import './mixins';
+.main {
+  @include flexColumn;
+  align-items: center;
+  background-color: var(--clr-blue-1);
+  min-height: calc(100vh - 2rem);
+  min-width: calc(100vw - 2rem);
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid var(--clr-blue-border);
+  border-radius: var(--border-radius);
+}
+.content {
+  display: grid;
+  grid-template-rows: 20vh 15vh 55vh;
+  background-color: var(--clr-blue-2);
+  border: 3px solid var(--clr-white);
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 1200px;
+  grid-template-columns: auto;
+  &_top {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  &_img {
+    grid-row: 2;
+    position: relative;
+    img {
+      width: 100%;
+      position: absolute;
+      right: 0;
+      bottom: -2px;
+      left: 0;
+    }
+  }
+
+  &_bottom {
+    position: relative;
+    grid-row: 3;
+    grid-column: 1 / -1;
+    background-color: var(--clr-blue-3);
+    width: 100%;
+    height: 100%;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+}
+
+.new_game_wrapper {
+  position: absolute;
+  z-index: 1;
+  bottom: 2rem;
+  right: 3rem;
+
+  button {
+    background-color: transparent;
+    font-family: inherit;
+    border: none;
+    outline: none;
+    color: var(--clr-white);
+    font-weight: bold;
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+.animation_container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  // border: 1px solid black;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Guess that Word!?</title>
+  <link rel="stylesheet" href="/sass/main.css">
+</head>
+
+<body>
+  <main class="main">
+    <div class="content">
+      <div class="content_top">
+        <div class="word_wrapper" id="wordWrapper"></div>
+      </div>
+      <div class="content_img">
+        <img src="assets/waves-4.svg" alt="waves" />
+        <div class="animation_container">
+          <div class="corgi"></div>
+          <div class="shark"></div>
+        </div>
+      </div>
+      <div class="content_bottom">
+        <div class="letters_wrapper" id="lettersWrapper">
+          <div class="letters_wrapper-container" id="lettersContainer"></div>
+        </div>
+        <div class="new_game_wrapper">
+          <button id="newGame">new game</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal_start" id="modalStart"></div>
+    </div>
+    <div class="modal_definition" id="modalDefinition"></div>
+    <div class="modal_gameOver" id="gameOver">
+      <h2 class="modal_gameOver-h2">Game Over</h2>
+    </div>
+  </main>
+  <script src="./js/main.js" type="module"></script>
+</body>
+
+</html>

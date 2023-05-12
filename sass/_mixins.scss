@@ -1,0 +1,86 @@
+@mixin modalStyles {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  // display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin letterStyle {
+  @include flexCenter;
+  font-size: var(--fs-lg);
+  color: var(--fc-primary);
+  border: 1px solid var(--fc-primary);
+  padding: 1rem;
+  background-color: var(--clr-white);
+}
+@mixin windowSize {
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 2rem);
+}
+//MEDIA QUERIES
+@mixin smallScreen {
+  @media (max-width: 330px) {
+    @content;
+  }
+}
+@mixin mediumScreen {
+  @media (min-width: 400px) and (max-width: 490px) {
+    @content;
+  }
+}
+@mixin largeScreen {
+  @media (min-width: 491px) and (max-width: 599px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin largeDesktop {
+  @media (min-width: 860px) {
+    @content;
+  }
+}
+
+@mixin sharkAndDogHeight {
+  @media (min-height: 600px) and (max-height: 700px) {
+    height: 32vh;
+  }
+  @media (min-height: 701px) and (max-height: 800px) {
+    height: 31vh;
+  }
+  @media (min-height: 801px) and (max-height: 900px) {
+    height: 30vh;
+  }
+  @media (min-height: 901px) and (max-height: 1100px) {
+    height: 29vh;
+  }
+  @media (min-height: 1101px) and (max-height: 1200px) {
+    height: 28vh;
+  }
+  @media (min-height: 1201px) and (max-height: 1300px) {
+    height: 27vh;
+  }
+  @media (min-height: 1301px) {
+    height: 26vh;
+  }
+}

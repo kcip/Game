@@ -1,0 +1,319 @@
+@import './mixins';
+//START MODAL
+.modal_start {
+  @include modalStyles;
+  @include windowSize;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+
+  &-content {
+    @include flexColumn;
+    height: 80%;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+  }
+  &-text {
+    @include flexColumn;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  &-h1 {
+    color: var(--fc-secondary);
+    font-size: var(--fs-lg);
+    margin: 1rem 2rem;
+  }
+  &-span {
+    color: var(--fc-black);
+    font-size: var(--fs-xl);
+  }
+  &-p {
+    color: var(--fc-secondary);
+    font-size: var(--fs-base);
+    span {
+      color: var(--fc-black);
+    }
+  }
+  &-selectContainer {
+    @include flexColumn;
+    margin-top: 18vh;
+    fieldset {
+      border: transparent;
+      margin-top: 1rem;
+    }
+    legend {
+      color: var(--fc-white);
+      font-size: var(--fs-md);
+      font-family: var(--ff-primary);
+      font-weight: bold;
+      text-align: center;
+      margin: 3rem 0;
+    }
+  }
+  &-button {
+    margin: 10vh 0;
+    text-align: center;
+    & button {
+      width: 200px;
+      height: 50px;
+      background: var(--fc-secondary);
+      border: 1px solid transparent;
+      outline: none;
+      border-radius: 2rem;
+      color: var(--clr-white);
+      font-size: var(--fs-base);
+      cursor: pointer;
+      // box-shadow: 10px 20px 20px rgba(0, 0, 0, 0.2);
+      transition: all 300ms ease-out;
+      &:hover {
+        color: var(--fc-secondary);
+        background: var(--clr-white);
+        border: 1px solid var(--fc-secondary);
+        transform: scale(1.2);
+        box-shadow: 10px 20px 20px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+      }
+    }
+  }
+  &-clouds {
+    position: absolute;
+    top: -6rem;
+    z-index: 1;
+    left: 50%;
+    @include desktop {
+      left: 59%;
+      top: -8rem;
+    }
+
+    img {
+      width: 150px;
+      @include desktop {
+        width: 200px;
+      }
+    }
+  }
+}
+
+.active_start {
+  display: flex;
+}
+//MW API DEFINITION MODAL
+.modal {
+  &_definition {
+    @include modalStyles;
+    z-index: 2;
+    background-color: var(--clr-blue-4);
+    border-radius: var(--border-radius);
+    display: none;
+  }
+
+  &_inner {
+    position: relative;
+    z-index: 3;
+    background-color: var(--clr-white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--clr-blue-border);
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    @include flexColumn;
+    text-align: center;
+  }
+  &_buttonClose {
+    position: absolute;
+    z-index: 5;
+    top: -5px;
+    right: -5px;
+    border-radius: 100%;
+    background-color: var(--clr-white);
+    @include flexColumn;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--clr-blue-border);
+    cursor: pointer;
+
+    span {
+      color: var(--clr-blue-border);
+      display: block;
+      padding: 5px;
+    }
+  }
+  &_content {
+    position: relative;
+    z-index: 2;
+    color: var(--fc-primary);
+    padding: 1rem 2rem;
+    p {
+      margin: 1rem auto;
+    }
+
+    &-h2 {
+      font-size: var(--fs-xl);
+    }
+    &-partOfspeech {
+      color: var(--fc-secondary);
+      font-size: var(--fs-md);
+      font-weight: bold;
+    }
+    &-p {
+      font-size: var(--fs-base);
+    }
+    &-definition {
+      font-size: var(--fs-md);
+      width: 70%;
+      margin: 0 auto;
+    }
+    &-apiInfo {
+      font-size: var(--fs-sm);
+      padding-top: 2rem;
+
+      span {
+        color: var(--fc-secondary);
+      }
+    }
+  }
+}
+
+.showDefinition {
+  display: flex;
+}
+.modal_gameOver {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 25%;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+
+  &-h2 {
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-xl);
+    color: var(--fc-secondary);
+  }
+}
+.showModal {
+  display: flex;
+}
+
+.corgiStart {
+  width: 75px;
+  height: auto;
+  animation: corgiStart linear 5300ms infinite both;
+}
+.modal_start-corgi {
+  position: absolute;
+  left: 0;
+  @include sharkAndDogHeight;
+}
+//GAME LEVEL START ALERT
+.level-alert {
+  height: 50px;
+  width: 125%;
+  background: var(--clr-white);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  p {
+    color: var(--fc-secondary);
+    font-size: var(--fs-base);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: var(--clr-white);
+    width: 0;
+    height: 0;
+    border-left: 2vh solid transparent;
+    border-right: 2vh solid transparent;
+    border-top: 10vh solid var(--clr-white);
+    position: absolute;
+    top: 45%;
+    left: -10%;
+    transform: rotate(60deg);
+  }
+}
+
+// @keyframes corgiStart {
+//   0% {
+//     transform: translateX(0);
+//   }
+
+//   35% {
+//     transform: translateX(100%);
+//   }
+
+//   65% {
+//     transform: translateX(100%) rotateY(180deg);
+//   }
+
+//   100% {
+//     transform: translateX(100%) rotateY(180deg);
+//   }
+// }
+@keyframes moveRight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(15deg);
+  }
+  100% {
+    transform: translate3d(-600px, -150px, 0) rotate(15deg);
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6) scaleX(-1) rotate(-15deg);
+  }
+  100% {
+    transform: translate3d(600px, -50px, 0) scale(0.6) scaleX(-1) rotate(15deg);
+  }
+}
+
+// .birds {
+// 	position: absolute;
+// 	z-index: 9999;
+// 	width: 100px;
+// 	height: 100px;
+// 	&.front {
+// 		animation: flyFront 4s linear;
+// 		animation-direction: forwards;
+// 		animation-iteration-count: infinite;
+// 		animation-delay: .5s;
+// 		top: 200px;
+// 		left: 200px;
+// 	}
+// 	&.back {
+// 		animation: flyBack 4s linear;
+// 		animation-direction: forwards;
+// 		animation-iteration-count: infinite;
+// 		animation-delay: .5s;
+// 		// animation-delay: 3s;
+// 		top: 50px;
+// 		left: -425px;
+// 	}
+// 	.bird {
+// 		position: absolute;
+// 		transform: scale(0.15);
+// 	}
+// 	@for $i from 1 through 12 {
+// 		$delay: random(2) - .5 + s;
+// 		.b#{$i} {
+// 			.wing1 {
+// 				animation: flap .5s ease-in-out;
+// 				animation-iteration-count: infinite;
+// 				//animation-timing-function: ease;
+// 				animation-direction: alternate;
+// 				transform-origin: 0 0;
+// 				//animation-delay: $delay;
+// 				animation-duration: $delay;
+// 			}
+// 		}
+// 	}

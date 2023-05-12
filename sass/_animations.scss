@@ -1,0 +1,21 @@
+.word_wrapper {
+  display: none;
+
+  &.word_active {
+    display: flex;
+  }
+}
+
+.letters_wrapper {
+  display: none;
+  &.letters_active {
+    display: flex;
+  }
+}
+
+.modal_start {
+  display: none;
+  &.start_active {
+    display: flex;
+  }
+}
