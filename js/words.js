@@ -102,14 +102,7 @@ export const beginnerWordArray = [
   'Balance',
   'Creative',
 ];
-export const mediumWordArray = [
-  'word!',
-  'this',
-  'is',
-  'the',
-  'medium',
-  'array',
-];
+export const mediumWordArray = ['word', 'this', 'is', 'the', 'medium', 'array'];
 export const advancedWordArray = [
   'Acquiesce',
   'Acronym',

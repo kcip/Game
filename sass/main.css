@@ -539,7 +539,7 @@ input {
   z-index: 3;
   background-color: var(--clr-white);
   border-radius: var(--border-radius);
-  border: 1px solid var(--clr-blue-border);
+  border: 1.5px solid var(--clr-blue-border);
   width: 80%;
   height: 80%;
   max-width: 800px;
@@ -547,6 +547,7 @@ input {
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.3);
 }
 .modal_buttonClose {
   position: absolute;
@@ -561,13 +562,21 @@ input {
   align-items: center;
   width: 30px;
   height: 30px;
-  border: 1px solid var(--clr-blue-border);
+  border: 1.5px solid var(--clr-blue-border);
   cursor: pointer;
+  transition: all 300ms ease-in-out;
 }
 .modal_buttonClose span {
   color: var(--clr-blue-border);
   display: block;
   padding: 5px;
+  transition: all 300ms ease-in-out;
+}
+.modal_buttonClose:hover {
+  transform: scale(1.1) rotate(45deg);
+}
+.modal_buttonClose:hover span {
+  transform: scale(1.1) rotate(-45deg);
 }
 .modal_content {
   position: relative;
@@ -626,6 +635,17 @@ input {
   display: flex;
 }
 
+@keyframes animateIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .corgiStart {
   width: 75px;
   height: auto;
@@ -744,6 +764,8 @@ input {
 .content_top {
   grid-column: 1/-1;
   grid-row: 1;
+  position: relative;
+  z-index: 2;
 }
 .content_img {
   grid-row: 2;

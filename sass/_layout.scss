@@ -22,6 +22,8 @@
   &_top {
     grid-column: 1 / -1;
     grid-row: 1;
+    position: relative;
+    z-index: 2;
   }
   &_img {
     grid-row: 2;

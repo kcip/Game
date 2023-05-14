@@ -5,10 +5,10 @@ import {
   letters,
 } from './words.js';
 import { modal } from './modalStart.js';
-// import { definition } from './modalDefinition.js';
+import { definition } from './modalDefinition.js';
 
 //DOM ELEMENTS FOR GAME PAGE
-// const reset = document.getElementById('newGame');
+const reset = document.getElementById('newGame');
 //RANDOM WORD GENERATED FOR GAME
 const word_wrapper = document.querySelector('.word_wrapper');
 //LETTERS WRAPPER
@@ -24,27 +24,29 @@ const modalStart = document.getElementById('modalStart');
 //DOM ELEMENTS FOR GAME OVER MODAL
 const gameOverModal = document.getElementById('gameOver');
 //DOM ELEMENTS FOR DEFINITION MODAL
-// const modalDefinition = document.getElementById('modalDefiition');
+const modalDefinition = document.getElementById('modalDefiition');
 
 //DOM ELEMENTS FOR CORGI & SHARK
 const corgi = document.querySelector('.corgi');
 const shark = document.querySelector('.shark');
 //DOM ELEMENT FOR RESET BUTTON
-let new_game = document.getElementById('newGame');
+// let new_game = document.getElementById('newGame');
 //GLOBAL VARAIBLS
 let newWord;
 let chosenWord;
+let levelSelect = false;
 let newArray = [];
 let lettersArray = [];
 let selectedLettersArray = [];
 let incorrectLettersArray = [];
-let level;
 //TEMPORARY
 // word_wrapper.classList.add('word_active');
 // letters_wrapper.classList.add('letters_active');
 
 window.onload = () => {
   modalStartDOM();
+  // modalStart.insertAdjacentHTML('beforeend', modal);
+  // modal_start.classList.add('start_active');
   startGame();
   radioCheck();
 };
@@ -53,6 +55,7 @@ const modalStartDOM = () => {
   modalStart.insertAdjacentHTML('beforeend', modal);
   modal_start.classList.add('start_active');
 };
+
 //#2 arrray() runs then selects random word from list of words in array
 const array = (arr) => {
   newArray = [];
@@ -62,14 +65,58 @@ const array = (arr) => {
     console.log('array', newArray);
   }
 };
+
 // #3 randomWord() is chosen from array of words
 const randomWord = () => {
   chosenWord = newArray[Math.floor(Math.random() * newArray.length)];
   console.log('chosen word:', chosenWord);
-  // fetchData(chosenWord);
   // insertWordToDom(chosenWord);
   return chosenWord;
 };
+
+// #4 chosen randomWord is sepearated into letters and then inserted into DOM & individual letteres in pushed into letteresArray
+//INSERT WORD INTO DOM
+const insertWordToDom = () => {
+  if (chosenWord) {
+    for (let i = 0; i < chosenWord.length; i++) {
+      let char = chosenWord[i].toLowerCase();
+
+      newWord = ` <div class="card-wrapper">
+                  <div class="card">
+                    <div class="card-front"></div>
+                    <div class="card-back">${char}</div>
+                  </div>
+                </div>`;
+      lettersArray.push(char);
+      word_wrapper.insertAdjacentHTML('beforeend', newWord);
+    }
+  } else {
+    console.log('select a level');
+  }
+};
+console.log('letters', lettersArray);
+
+// #5 on button click, insertWordToDom() is run
+///START GAME
+const startGame = () => {
+  const start_button = document.getElementById('startButton');
+  if (start_button) {
+    start_button.addEventListener('click', function () {
+      console.log('start clicked');
+      if (levelSelect) {
+        insertWordToDom(newWord);
+        modal_start.classList.remove('start_active');
+        word_wrapper.classList.add('word_active');
+        letters_wrapper.classList.add('letters_active');
+        corgi.classList.add('add');
+        shark.classList.add('add');
+      } else {
+        alert('select level');
+      }
+    });
+  }
+};
+// let levelSelect = false;
 /// #1 - selecting level runs array()
 const radioCheck = () => {
   const checked = Array.from(document.getElementsByClassName('radio_group'));
@@ -82,76 +129,23 @@ const radioCheck = () => {
         switch (input) {
           case 'levelOne':
             array(beginnerWordArray);
-            level = 'beginner';
             levelSelect = true;
             break;
           case 'levelTwo':
             array(mediumWordArray);
-            level = 'medium';
             levelSelect = true;
             break;
           case 'levelThree':
             array(advancedWordArray);
-            level = 'hard';
             levelSelect = true;
             break;
           default:
             array(beginnerWordArray);
         }
-        console.log('level', level);
       });
     });
   }
 };
-
-let levelSelect = false;
-
-// #4 chosen randomWord is sepearated into letters and then inserted into DOM & individual letteres in pushed into letteresArray
-//INSERT WORD INTO DOM
-const insertWordToDom = () => {
-  for (let i = 0; i < chosenWord.length; i++) {
-    let char = chosenWord[i].toLowerCase();
-
-    newWord = ` <div class="card-wrapper">
-                  <div class="card">
-                    <div class="card-front"></div>
-                    <div class="card-back">${char}</div>
-                  </div>
-                </div>`;
-    lettersArray.push(char);
-    word_wrapper.insertAdjacentHTML('beforeend', newWord);
-  }
-};
-console.log('letters', lettersArray);
-
-// #5 on button click, insertWordToDom() is run
-///START GAME
-
-const startGame = () => {
-  newArray = [];
-  const start_button = document.getElementById('startButton');
-  if (start_button) {
-    start_button.addEventListener('click', function () {
-      console.log('start clicked & level select', levelSelect);
-      if (levelSelect) {
-        // reset();
-        array();
-        insertWordToDom();
-        modal_start.classList.remove('start_active');
-        word_wrapper.classList.add('word_active');
-        letters_wrapper.classList.add('letters_active');
-        corgi.classList.add('add');
-        shark.classList.add('add');
-        //keyboard
-        keyboard();
-        // fetchData(chosenWord);
-      } else {
-        alert('select level');
-      }
-    });
-  }
-};
-
 //INSERTS LETTERS INTO DOM AT GAME START
 const keyboard = () => {
   let letter;
@@ -159,11 +153,13 @@ const keyboard = () => {
     letter = `<span class="letters_wrapper-span">${char}</span>`;
     lettersContainer.insertAdjacentHTML('beforeend', letter);
   });
+};
 
-  const lettersWrapperSpans = document.querySelectorAll(
-    '.letters_wrapper-span'
-  );
+keyboard();
 
+const lettersWrapperSpans = document.querySelectorAll('.letters_wrapper-span');
+
+const arrayCheck = () => {
   for (let i = 0; i < lettersWrapperSpans.length; i++) {
     let key = lettersWrapperSpans[i];
 
@@ -197,6 +193,8 @@ const keyboard = () => {
     });
   }
 };
+
+arrayCheck();
 
 const switchCard = (i) => {
   const cardFront = document.querySelectorAll('.card-front');
@@ -244,143 +242,14 @@ const compareArrays = (arr1, arr2) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////MODAL ///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-const reset = () => {
-  clear();
-  playContinued();
-};
-// keyboard();
-
-const playContinued = () => {
-  switch (level) {
-    case 'beginner':
-      array(beginnerWordArray);
-      break;
-    case 'medium':
-      array(mediumWordArray);
-      break;
-    case 'hard':
-      array(advancedWordArray);
-      break;
-    default:
-      array(beginnerWordArray);
-  }
-  setTimeout(() => {
-    array();
-    insertWordToDom(chosenWord);
-    modal_start.classList.remove('start_active');
-    word_wrapper.classList.add('word_active');
-    letters_wrapper.classList.add('letters_active');
-    corgi.classList.add('add');
-    shark.classList.add('add');
-    keyboard();
-  }, 200);
-};
-
-const clear = () => {
-  newWord = null;
-  chosenWord = null;
-  newArray = [];
-  lettersArray = [];
-  selectedLettersArray = [];
-  incorrectLettersArray = [];
-  levelSelect = false;
-  modalDefinition.innerHTML = '';
-  word_wrapper.innerHTML = '';
-  lettersContainer.innerHTML = '';
-  modal_definition.classList.remove('showDefinition');
-  word_wrapper.classList.remove('word_active');
-  letters_wrapper.classList.remove('letters_active');
-  corgi.style.transform = `translate3d(0px, 0px, 0px)`;
-  shark.style.transform = `translate3d(0px, 0px, 0px)`;
-  corgi.classList.remove('add');
-  shark.classList.remove('add');
-};
-
-new_game.addEventListener('click', () => {
-  clear();
-  modal_start.classList.add('start_active');
-  inputClear();
-});
-
-const inputClear = () => {
-  radioLabel();
-  radioButton();
-};
-
-const radioLabel = () => {
-  console.log();
-  const checkedRadioLabelAfter = document.querySelectorAll(
-    '[type=radio]:checked ~ label'
-  );
-  const notCheckedRadioLabelAfter = document.querySelectorAll(
-    '[type=radio]:not(:checked) + label'
-  );
-
-  checkedRadioLabelAfter.forEach((label) => {
-    console.log('checked', label);
-  });
-
-  notCheckedRadioLabelAfter.forEach((label) => {
-    console.log('not checked', label);
-  });
-};
-
-const radioButton = () => {
-  const checkedRadioLabelFillColor = document.querySelectorAll(
-    '[type=radio]:checked + label',
-    ':after'
-  );
-};
-
-//////////////////API CALL & WORD DEFINITION MODAL /////////////////////////
-///////////////////////////////////////////////////////////////////////////
-async function fetchData(chosenWord) {
-  const apikey = '67e2898b-2883-45c6-b055-3c8ba071f230';
-  const baseURL = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${chosenWord}?key=${apikey}`;
-  const url = baseURL;
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      apiDefinition(data);
-      console.log('api data', data);
-    })
-    .catch((error) => {
-      console.log('error', error);
-    });
-}
-let definition;
-async function apiDefinition(data) {
-  try {
-    const WORD_DEFINITION = data[0].hwi.hw;
-    const WORD_PART_OF_SPEECH = data[0].fl;
-    const WORD_PRONUNCIATION = data[0].hwi.prs[0].mw;
-    const WORD_SHORT_DEFINITION = data[0].shortdef[0];
-    definition = `
-      <div class="modal_inner">
-        <button class="modal_buttonClose" id="close"><span>X</span></button>
-        <div class="modal_content">
-          <h2 class="modal_content-h2">${WORD_DEFINITION}</h2>
-          <p class="modal_content-partOfspeech">${WORD_PART_OF_SPEECH}</p>
-          <p class="modal_content-p">${WORD_PRONUNCIATION}</p>
-          <p class="modal_content-definition">${WORD_SHORT_DEFINITION}</p>
-          <p class="modal_content-apiInfo">definition provided by: <span><a href="https://dictionaryapi.com/" target="_blank">Merriam-Webster</a></span></p>
-        </div>
-      </div>
-`;
-  } catch (error) {
-    console.log('api error', error);
-  }
-}
 //MODAL DEFINITION
 
 const modal_definition = document.querySelector('.modal_definition');
-const modalDefinition = document.getElementById('modalDefinition');
 const wordDefinition = () => {
-  // const modalDefinition = document.getElementById('modalDefinition');
-  fetchData(chosenWord);
+  const modalDefinition = document.getElementById('modalDefinition');
+
   setTimeout(() => {
     modalDefinition.insertAdjacentHTML('beforeend', definition);
     modal_definition.classList.add('showDefinition');
@@ -388,18 +257,128 @@ const wordDefinition = () => {
     const close = document.getElementById('close');
     if (close) {
       close.addEventListener('click', () => {
-        // resetGame();
-        reset();
+        resetGame();
         console.log('icl', incorrectLettersArray);
         console.log('sla', selectedLettersArray);
         console.log('na', newArray);
         console.log('chosen', chosenWord);
-        console.log('level 267', level);
       });
 
       // close.addEventListener('click', () => modalClose());
     } else {
       console.log('no close for you');
     }
-  }, 200);
+  }, 500);
+};
+const resetGame = () => {
+  //clear arrays
+  newArray = [];
+  lettersArray = [];
+  selectedLettersArray = [];
+  incorrectLettersArray = [];
+
+  //clear chosen word
+  chosenWord = null;
+
+  //clear DOM
+  resetClasses();
+  removeKeyClass();
+  removeCardFlipClass();
+  word_wrapper.querySelectorAll('*').forEach((n) => n.remove());
+  lettersContainer.innerHTML = '';
+  //show modal start
+  modal_start.classList.add('start_active');
+  // reset global variables
+  levelSelect = false;
+
+  // start a new game
+  setTimeout(() => {
+    startGame();
+  }, 300);
+};
+//RESET CLASSES
+const resetClasses = () => {
+  modal_definition.classList.remove('showDefinition');
+  gameOverModal.classList.remove('showModal');
+  word_wrapper.classList.remove('word_active');
+  letters_wrapper.classList.remove('letters_active');
+  corgi.classList.remove('add');
+  shark.classList.remove('add');
+  corgi.style.transform = `translate3d(0px, 0px, 0px)`;
+  shark.style.transform = `translate3d(0px, 0px, 0px)`;
+  //
+  chosenWord = '';
+  levelSelect = false;
+};
+
+const removeKeyClass = () => {
+  for (let i = 0; i < lettersWrapperSpans.length; i++) {
+    let key = lettersWrapperSpans[i];
+    if (key.classList.contains('match')) {
+      key.classList.remove('match');
+    }
+    if (key.classList.contains('no-match')) {
+      key.classList.remove('no-match');
+    }
+  }
+};
+
+const removeCardFlipClass = () => {
+  const cardFront = document.querySelectorAll('.card-front');
+  for (let i = 0; i < cardFront.length; i++) {
+    cardFront[i].classList.remove('flip');
+  }
+};
+
+startGame();
+radioCheck();
+
+/////////////////////////////////
+
+const radioLabel = () => {
+  const checkedRadioLabelAfter = document.querySelectorAll(
+    '[type=radio]:checked ~ label'
+  );
+  if (checkedRadioLabelAfter) {
+    for (let i = 0; i < checkedRadioLabelAfter.length; i++) {
+      checkedRadioLabelAfter[i].style.transform = 'unset';
+      console.log('label', checkedRadioLabelAfter[i]);
+    }
+  }
+};
+
+const radioButton = () => {
+  // const checkedRadioLabelFillColor = document.querySelectorAll(
+  //   '[type=radio]:checked + label',
+  //   ':after'
+  // );
+  // if (checkedRadioLabelFillColor) {
+  //   checkedRadioLabelFillColor.forEach((element) => {
+  //     console.log('radio', element);
+  //   });
+  // } else {
+  //   console.log('misisng');
+  // }
+
+  const checkedRadioLabel = document.querySelector(
+    '[type="radio"]:checked + label'
+  );
+
+  if (checkedRadioLabel) {
+    const checkedRadioLabelStyles = window.getComputedStyle(
+      checkedRadioLabel,
+      ':after'
+    );
+    console.log('radio:after', checkedRadioLabelStyles);
+    const style = document.createElement('style');
+    style.innerHTML = `
+      [type="radio"]:checked + label:after {
+        opacity: 0;
+        transform: scale(0);
+      }
+      `;
+    document.head.appendChild(style);
+  } else {
+    console.log('missing');
+  }
 };
