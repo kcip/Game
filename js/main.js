@@ -20,12 +20,21 @@ const lettersContainer = document.getElementById('lettersContainer');
 //DOM ELEMENTS FOR START MODAL
 const modal_start = document.querySelector('.modal_start');
 const modalStart = document.getElementById('modalStart');
-// const content_top = document.querySelector('.content_top');
+//DOM ELEMENTS FOR MODAL START TEXT
+const modalStartH1 = document.getElementsByClassName('modal_start-h1');
+const modalStartP = document.getElementsByClassName('modal_start-p');
+const modalStartClouds = document.querySelector('.modal_start-clouds');
+const modalStartContent = document.getElementsByClassName(
+  'modal_start-content'
+);
+//DOM ELEMENTS FOR CORGI & SHARK
+const modalStartCorgi = document.getElementsByClassName('modal_start-corgi');
+
 //DOM ELEMENTS FOR GAME OVER MODAL
 const gameOverModal = document.getElementById('gameOver');
 //DOM ELEMENTS FOR DEFINITION MODAL
 // const modalDefinition = document.getElementById('modalDefiition');
-
+// const definitionInnerContainer = getElementsByClassName('modal_inner');
 //DOM ELEMENTS FOR CORGI & SHARK
 const corgi = document.querySelector('.corgi');
 const shark = document.querySelector('.shark');
@@ -38,6 +47,9 @@ let newArray = [];
 let lettersArray = [];
 let selectedLettersArray = [];
 let incorrectLettersArray = [];
+let correctWords = [];
+let allWords = [];
+let wrongWords = [];
 let level;
 //TEMPORARY
 // word_wrapper.classList.add('word_active');
@@ -57,7 +69,9 @@ const modalStartDOM = () => {
 const array = (arr) => {
   newArray = [];
   if (arr) {
-    arr.map((words) => newArray.push(words));
+    arr.map((words) => {
+      newArray.push(words);
+    });
     randomWord();
     console.log('array', newArray);
   }
@@ -137,13 +151,23 @@ const startGame = () => {
         // reset();
         array();
         insertWordToDom();
-        modal_start.classList.remove('start_active');
-        word_wrapper.classList.add('word_active');
-        letters_wrapper.classList.add('letters_active');
-        corgi.classList.add('add');
-        shark.classList.add('add');
-        //keyboard
-        keyboard();
+        modalStartAnimateClasses();
+
+        setTimeout(() => {
+          modal_start.classList.remove('start_active');
+          word_wrapper.classList.add('word_active');
+          letters_wrapper.classList.add('letters_active');
+          corgi.classList.add('add');
+          shark.classList.add('add');
+          keyboard();
+        }, 1300);
+
+        // modal_start.classList.remove('start_active');
+        // word_wrapper.classList.add('word_active');
+        // letters_wrapper.classList.add('letters_active');
+        // corgi.classList.add('add');
+        // shark.classList.add('add');
+        // keyboard();
         // fetchData(chosenWord);
       } else {
         alert('select level');
@@ -152,7 +176,41 @@ const startGame = () => {
   }
 };
 
-//INSERTS LETTERS INTO DOM AT GAME START
+const modalStartAnimateClasses = () => {
+  for (let i = 0; i < modalStartH1.length; i++) {
+    modalStartH1[i].classList.add('animate-up');
+  }
+  for (let i = 0; i < modalStartP.length; i++) {
+    modalStartP[i].classList.add('animate-up-2');
+  }
+  for (let i = 0; i < modalStartCorgi.length; i++) {
+    modalStartCorgi[i].classList.add('animate-up-2');
+  }
+  for (let i = 0; i < modalStartContent.length; i++) {
+    modalStartContent[i].classList.add('animate-fade-out');
+  }
+
+  // modalStartSpan.classList.add('animate-up-2');
+  // modalStartClouds.classList.add('animate-up-3');
+  // modalStartCorgi.classList.add('aniate-fade-out');
+};
+
+const removeAnimateClasses = () => {
+  for (let i = 0; i < modalStartH1.length; i++) {
+    modalStartH1[i].classList.remove('animate-up');
+  }
+  for (let i = 0; i < modalStartP.length; i++) {
+    modalStartP[i].classList.remove('animate-up-2');
+  }
+  for (let i = 0; i < modalStartCorgi.length; i++) {
+    modalStartCorgi[i].classList.remove('animate-up-2');
+  }
+  for (let i = 0; i < modalStartContent.length; i++) {
+    modalStartContent[i].classList.remove('animate-fade-out');
+  }
+};
+
+//INSERTS LETTERS INTO DOM AT GAME START animate-in
 const keyboard = () => {
   let letter;
   letters.map((char) => {
@@ -160,9 +218,11 @@ const keyboard = () => {
     lettersContainer.insertAdjacentHTML('beforeend', letter);
   });
 
-  const lettersWrapperSpans = document.querySelectorAll(
-    '.letters_wrapper-span'
-  );
+  let lettersWrapperSpans = document.querySelectorAll('.letters_wrapper-span');
+
+  for (let i = 0; i < lettersWrapperSpans.length; i++) {
+    lettersWrapperSpans[i].classList.add('animate-in');
+  }
 
   for (let i = 0; i < lettersWrapperSpans.length; i++) {
     let key = lettersWrapperSpans[i];
@@ -229,14 +289,27 @@ const isColliding = (a, b) => {
 const collisionAlert = (a, b) => {
   if (isColliding(a, b)) {
     console.log('collide!');
+    fetchData(chosenWord);
     gameOverModal.classList.add('showModal');
-    wordDefinition();
+    setTimeout(() => {
+      wordDefinition();
+      wrongWords.push(chosenWord);
+    }, 1200);
+    // wordDefinition();
+    // wrongWords.push(chosenWord);
+    // gameOverModal.classList.add('showModal');
+    setTimeout(() => {
+      gameOverModal.classList.remove('showModal');
+    }, 1300);
   }
 };
 const compareArrays = (arr1, arr2) => {
   if (arr1.length === arr2.length && arr1.every((val) => arr2.includes(val))) {
     console.log('game over');
-    wordDefinition();
+    correctWords.push(chosenWord);
+    setTimeout(() => {
+      wordDefinition();
+    }, 1200);
   } else {
     console.log('keep playing');
   }
@@ -269,13 +342,14 @@ const playContinued = () => {
   setTimeout(() => {
     array();
     insertWordToDom(chosenWord);
+    allWords.push(chosenWord);
     modal_start.classList.remove('start_active');
     word_wrapper.classList.add('word_active');
     letters_wrapper.classList.add('letters_active');
     corgi.classList.add('add');
     shark.classList.add('add');
     keyboard();
-  }, 200);
+  }, 500);
 };
 
 const clear = () => {
@@ -300,8 +374,9 @@ const clear = () => {
 
 new_game.addEventListener('click', () => {
   clear();
+  removeAnimateClasses();
   modal_start.classList.add('start_active');
-  inputClear();
+  // inputClear();
 });
 
 const inputClear = () => {
@@ -384,6 +459,14 @@ const wordDefinition = () => {
   setTimeout(() => {
     modalDefinition.insertAdjacentHTML('beforeend', definition);
     modal_definition.classList.add('showDefinition');
+    //
+    // const definitionInnerContainer = getElementsByClassName('modal_inner');
+    // if (definitionInnerContainer) {
+    //   for (let i = 0; i > definitionInnerContainer.length; i++) {
+    //     definitionInnerContainer[i].classList.add('fadeInDef');
+    //   }
+    // }
+
     //CLOSE MODAL AND REST GAME
     const close = document.getElementById('close');
     if (close) {
@@ -403,3 +486,8 @@ const wordDefinition = () => {
     }
   }, 200);
 };
+
+console.log('incorrect words', incorrectLettersArray);
+console.log('correct words', correctWords);
+console.log('wrong words', wrongWords);
+console.log('all words', allWords);
