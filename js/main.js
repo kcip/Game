@@ -268,9 +268,9 @@ const move = () => {
   let ranNum1 = Math.floor(Math.random() * 1000);
   let ranNum2 = Math.floor(Math.random() * 500);
 
-  corgi.style.transform = `translate3d(-${ranNum1}px, 0px, 0px)`;
+  corgi.style.transform = `translate3d(${ranNum1}px, 0px, 0px)`;
   corgi.style.transition = `all 300ms linear`;
-  shark.style.transform = `translate3d(${ranNum2}px,0px, 0px )`;
+  shark.style.transform = `translate3d(-${ranNum2}px,0px, 0px )`;
   shark.style.transition = `all 300ms linear`;
 };
 
@@ -294,7 +294,7 @@ const collisionAlert = (a, b) => {
     setTimeout(() => {
       wordDefinition();
       wrongWords.push(chosenWord);
-    }, 1200);
+    }, 1100);
     // wordDefinition();
     // wrongWords.push(chosenWord);
     // gameOverModal.classList.add('showModal');
@@ -349,7 +349,7 @@ const playContinued = () => {
     corgi.classList.add('add');
     shark.classList.add('add');
     keyboard();
-  }, 500);
+  }, 300);
 };
 
 const clear = () => {
@@ -379,35 +379,35 @@ new_game.addEventListener('click', () => {
   // inputClear();
 });
 
-const inputClear = () => {
-  radioLabel();
-  radioButton();
-};
+// const inputClear = () => {
+//   radioLabel();
+//   radioButton();
+// };
 
-const radioLabel = () => {
-  console.log();
-  const checkedRadioLabelAfter = document.querySelectorAll(
-    '[type=radio]:checked ~ label'
-  );
-  const notCheckedRadioLabelAfter = document.querySelectorAll(
-    '[type=radio]:not(:checked) + label'
-  );
+// const radioLabel = () => {
+//   console.log();
+//   const checkedRadioLabelAfter = document.querySelectorAll(
+//     '[type=radio]:checked ~ label'
+//   );
+//   const notCheckedRadioLabelAfter = document.querySelectorAll(
+//     '[type=radio]:not(:checked) + label'
+//   );
 
-  checkedRadioLabelAfter.forEach((label) => {
-    console.log('checked', label);
-  });
+//   checkedRadioLabelAfter.forEach((label) => {
+//     console.log('checked', label);
+//   });
 
-  notCheckedRadioLabelAfter.forEach((label) => {
-    console.log('not checked', label);
-  });
-};
+//   notCheckedRadioLabelAfter.forEach((label) => {
+//     console.log('not checked', label);
+//   });
+// };
 
-const radioButton = () => {
-  const checkedRadioLabelFillColor = document.querySelectorAll(
-    '[type=radio]:checked + label',
-    ':after'
-  );
-};
+// const radioButton = () => {
+//   const checkedRadioLabelFillColor = document.querySelectorAll(
+//     '[type=radio]:checked + label',
+//     ':after'
+//   );
+// };
 
 //////////////////API CALL & WORD DEFINITION MODAL /////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -458,7 +458,11 @@ const wordDefinition = () => {
   fetchData(chosenWord);
   setTimeout(() => {
     modalDefinition.insertAdjacentHTML('beforeend', definition);
+    const modal_inner = document.querySelector('.modal_inner');
     modal_definition.classList.add('showDefinition');
+    modal_inner.classList.add('animate-fade-in');
+    // modal_definition.classList.add('animate-fade-in');
+
     //
     // const definitionInnerContainer = getElementsByClassName('modal_inner');
     // if (definitionInnerContainer) {

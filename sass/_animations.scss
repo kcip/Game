@@ -30,6 +30,26 @@
 .animate-fade-out {
   animation: fadeOut 800ms ease-out forwards 600ms;
 }
+
+.animate-fade-in {
+  animation: fadeIn 800ms ease-in forwards 300ms;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes popUp {
   0% {
     transform: translate3d(0, 0, 0);

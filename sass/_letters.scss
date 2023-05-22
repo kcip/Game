@@ -1,4 +1,37 @@
 @import './mixins';
+//ANIMATIONS FOR LETTERS ON LOAD
+.animate-in {
+  opacity: 0;
+  will-change: transform;
+}
+
+$duration: 100ms;
+$easing: ease-in-out;
+
+@for $i from 1 through 26 {
+  $delay: ($i - 1) * 50ms;
+  .animate-in:nth-child(#{$i}) {
+    animation: pop-in #{$duration} #{$easing} #{$delay} forwards;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 //LETTERS
 .letters_wrapper {
   height: 90%;
@@ -26,9 +59,10 @@
     cursor: pointer;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-
-    transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
     transform: scale(1);
+    will-change: transform;
+    transition: transform 600ms ease-in-out, box-shadow 300ms ease-in-out;
+    transition: all 600ms ease !important;
     @include desktop {
       width: 75px;
       height: 75px;
@@ -40,42 +74,12 @@
       height: 95px;
     }
     &:hover {
-      transform: scale(0.9) !important;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+      transform: scale(0.9);
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      // background: var(--clr-blue-2);
+      // border: 1px solid #fff;
+      // color: #fff;
     }
-  }
-}
-
-.animate-in {
-  opacity: 0;
-}
-//ANIMATIONS FOR LETTERS ON LOAD
-$duration: 100ms;
-$easing: ease-in-out;
-
-@for $i from 1 through 26 {
-  $delay: ($i - 1) * 50ms;
-  .animate-in:nth-child(#{$i}) {
-    animation: pop-in #{$duration} #{$easing} #{$delay} forwards;
-  }
-}
-
-@keyframes pop-in {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
   }
 }
 

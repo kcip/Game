@@ -8,21 +8,31 @@ body {
 .shark {
   display: none;
   position: absolute;
-  background: red;
-  width: 50px !important;
-  height: 50px !important;
-  left: 0;
-  bottom: -10px !important;
+  width: 170px;
+  height: 100px !important;
+  right: 5px;
+  bottom: -14px !important;
+  opacity: 0;
 }
 .corgi {
   display: none;
   position: absolute;
-  background: blue;
-  width: 50px !important;
-  height: 50px !important;
-  right: 0;
-  bottom: -10px !important;
+  width: 70px;
+  height: 70px !important;
+  left: 5px;
+  bottom: -22px !important;
+  opacity: 0;
 }
 .add {
   display: block;
+  animation: appear 300ms ease-in forwards 200ms;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
